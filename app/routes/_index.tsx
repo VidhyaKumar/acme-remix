@@ -32,7 +32,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
 export default function Index() {
   const { users } = useLoaderData<typeof loader>()
-  const fetcher = useFetcher()
+  const fetcher = useFetcher({ key: "users" })
   const isAddingUsers =
     fetcher.formData?.get("intent") === "add-users" && fetcher.state !== "idle"
   const isDeletingUsers =

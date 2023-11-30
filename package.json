@@ -14,19 +14,20 @@
     "db:seed": "tsx ./app/db/seed.server"
   },
   "dependencies": {
-    "@libsql/client": "0.4.0-pre.4",
+    "@faker-js/faker": "^8.3.1",
+    "@libsql/client": "0.4.0-pre.5",
     "@paralleldrive/cuid2": "^2.2.2",
     "@remix-run/css-bundle": "^2.3.1",
     "@remix-run/node": "^2.3.1",
     "@remix-run/react": "^2.3.1",
     "@remix-run/serve": "^2.3.1",
-    "drizzle-orm": "^0.29.0",
+    "drizzle-orm": "^0.29.1",
     "isbot": "^3.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.3.1",
+    "@flydotio/dockerfile": "^0.4.11",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@remix-run/dev": "^2.3.1",
     "@remix-run/eslint-config": "^2.3.1",
