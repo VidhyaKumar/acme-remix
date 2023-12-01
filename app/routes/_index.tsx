@@ -31,8 +31,8 @@ export const loader = async (args: LoaderFunctionArgs) => {
         limit: 1200,
       })
     },
-    ttl: 60 * 60 * 24,
-    staleWhileRevalidate: 60 * 60 * 24,
+    ttl: 1000 * 60 * 30,
+    staleWhileRevalidate: 1000 * 60 * 60,
   })
 
   return defer({ users: cachedUsers })
