@@ -91,7 +91,7 @@ export default function Index() {
             }
           >
             {(users) => (
-              <ul className="grid grid-cols-12 max-w-full auto-rows-[1fr]">
+              <ul className="grid sm:grid-cols-3 max-w-full auto-rows-[1fr] grid-cols-2 md:grid-cols-8 lg:grid-cols-12">
                 {users.length === 0 && (
                   <li className="py-1 px-2 flex items-center justify-center">
                     No users found.
