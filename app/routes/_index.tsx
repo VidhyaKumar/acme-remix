@@ -20,14 +20,14 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const usersData = db.query.users
+  const users = db.query.users
     .findMany({
       orderBy: (user, { desc }) => desc(user.created_at),
-      limit: 120,
+      limit: 1200,
     })
     .then((users) => users)
 
-  return defer({ users: usersData })
+  return defer({ users })
 }
 
 export default function Index() {
