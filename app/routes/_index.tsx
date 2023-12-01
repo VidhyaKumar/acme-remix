@@ -6,10 +6,12 @@ import type {
 } from "@remix-run/node"
 import { defer, json } from "@remix-run/node"
 import { Await, useFetcher, useLoaderData } from "@remix-run/react"
+import { cachified } from "@epic-web/cachified"
 import { faker } from "@faker-js/faker"
 
 import { db } from "~/db/client.server"
 import { users } from "~/db/schema.server"
+import { lruCache } from "~/lib/cache"
 import { Logo } from "~/components/logo"
 
 export const meta: MetaFunction = () => {
@@ -20,14 +22,20 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const users = db.query.users
-    .findMany({
-      orderBy: (user, { desc }) => desc(user.created_at),
-      limit: 1200,
-    })
-    .then((users) => users)
+  const cachedUsers = cachified({
+    key: "users",
+    cache: lruCache,
+    async getFreshValue() {
+      return await db.query.users.findMany({
+        orderBy: (user, { desc }) => desc(user.created_at),
+        limit: 1200,
+      })
+    },
+    ttl: 60 * 60 * 24,
+    staleWhileRevalidate: 60 * 60 * 24,
+  })
 
-  return defer({ users })
+  return defer({ users: cachedUsers })
 }
 
 export default function Index() {

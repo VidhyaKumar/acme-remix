@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import("prettier").Config} */
+const config = {
   endOfLine: "lf",
   semi: false,
   singleQuote: false,
@@ -33,3 +34,5 @@ module.exports = {
     "@ianvs/prettier-plugin-sort-imports",
   ],
 }
+
+export default config
