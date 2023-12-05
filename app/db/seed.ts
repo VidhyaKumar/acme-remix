@@ -3,7 +3,7 @@ import "dotenv/config"
 import { faker } from "@faker-js/faker"
 
 import { db } from "./client.server"
-import { users } from "./schema.server"
+import { users } from "./schema"
 
 async function main() {
   try {

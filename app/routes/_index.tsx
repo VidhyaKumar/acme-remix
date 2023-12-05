@@ -10,7 +10,7 @@ import { cachified } from "@epic-web/cachified"
 import { faker } from "@faker-js/faker"
 
 import { db } from "~/db/client.server"
-import { users } from "~/db/schema.server"
+import { users } from "~/db/schema"
 import { lruCache } from "~/lib/cache"
 import { Logo } from "~/components/logo"
 
