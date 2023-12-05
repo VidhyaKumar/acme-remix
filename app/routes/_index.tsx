@@ -7,6 +7,7 @@ import type {
 import { defer, json } from "@remix-run/node"
 import { Await, useFetcher, useLoaderData } from "@remix-run/react"
 import { cachified } from "@epic-web/cachified"
+import { faker } from "@faker-js/faker"
 
 import { lruCache } from "~/lib/cache"
 import { db } from "~/lib/prisma"
@@ -120,7 +121,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (intent) {
     case "add-users":
-      // TODO: Add users
+      Array.from({ length: 100 }).forEach(async (_, i) => {
+        await db.user.create({
+          data: {
+            email: faker.internet.email(),
+            name: faker.person.fullName(),
+            color: faker.internet.color(),
+          },
+        })
+      })
+      lruCache.delete("users")
       return json({ message: "Users added!" })
     case "delete-users":
       await db.user.deleteMany()
