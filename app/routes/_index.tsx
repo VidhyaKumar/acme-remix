@@ -7,11 +7,9 @@ import type {
 import { defer, json } from "@remix-run/node"
 import { Await, useFetcher, useLoaderData } from "@remix-run/react"
 import { cachified } from "@epic-web/cachified"
-import { faker } from "@faker-js/faker"
 
-import { db } from "~/db/client.server"
-import { users } from "~/db/schema.server"
 import { lruCache } from "~/lib/cache"
+import { db } from "~/lib/prisma"
 import { Logo } from "~/components/logo"
 
 export const meta: MetaFunction = () => {
@@ -26,9 +24,8 @@ export const loader = async (args: LoaderFunctionArgs) => {
     key: "users",
     cache: lruCache,
     async getFreshValue() {
-      return await db.query.users.findMany({
-        orderBy: (user, { desc }) => desc(user.created_at),
-        limit: 1200,
+      return await db.user.findMany({
+        take: 1200,
       })
     },
     ttl: 1000 * 60 * 30,
@@ -123,15 +120,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (intent) {
     case "add-users":
-      const usersData = Array.from({ length: 5000 }, (_, i) => ({
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        color: faker.color.rgb({ format: "hex" }),
-      }))
-      await db.insert(users).values(usersData).onConflictDoNothing()
+      // TODO: Add users
       return json({ message: "Users added!" })
     case "delete-users":
-      await db.delete(users)
+      await db.user.deleteMany()
       return json({ message: "Users deleted!" })
     default:
       return json({ message: "Invalid request" }, { status: 400 })

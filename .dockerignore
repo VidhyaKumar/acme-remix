@@ -1,9 +1,9 @@
 node_modules
 .DS_store
-
+.env
+*.db
+*.db-journal
+*.local.*
 /.cache
 /build
 /public/build
-.env
-
-*.local.*
