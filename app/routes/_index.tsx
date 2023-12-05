@@ -133,6 +133,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return json({ message: "Users added!" })
     case "delete-users":
       await db.delete(users)
+      lruCache.delete("users")
       return json({ message: "Users deleted!" })
     default:
       return json({ message: "Invalid request" }, { status: 400 })
