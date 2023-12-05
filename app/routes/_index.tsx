@@ -129,6 +129,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         color: faker.color.rgb({ format: "hex" }),
       }))
       await db.insert(users).values(usersData).onConflictDoNothing()
+      lruCache.delete("users")
       return json({ message: "Users added!" })
     case "delete-users":
       await db.delete(users)
