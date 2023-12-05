@@ -70,7 +70,7 @@ export default function Index() {
               name="intent"
               type="submit"
               className="bg-zinc-300 text-black px-4 py-2 rounded disabled:opacity-50 disabled:pointer-events-none"
-              disabled={true}
+              disabled={isDeletingUsers}
               value="delete-users"
             >
               {isDeletingUsers ? "Deleting users..." : "Delete users"}
